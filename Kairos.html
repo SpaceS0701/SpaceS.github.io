@@ -76,6 +76,7 @@
             white-space: pre-wrap;
             text-align: center;
             z-index: 20; /* 背景画像よりも前面に表示 */
+            width: 80%; /* 追加: テキストエリアの横幅を指定 */
         }
         .message {
             display: none;
@@ -124,15 +125,21 @@
         /* 縦長画面（スマートフォンなど）用のスタイル */
         @media screen and (max-height: 700px) {
             textarea {
-                width: 200%; /* 画面幅いっぱいに調整 */
-                max-width: 200%; /* 最大幅も100%に */
+                width: 100%; /* 画面幅いっぱいに調整 */
+                max-width: 100%; /* 最大幅も100%に */
+            }
+            #fly-text {
+                width: 100%; /* テキスト表示エリアを画面幅いっぱいにする */
+                left: 0; /* 左端に寄せる */
+                transform: translate(0, -50%); /* 中央に戻す */
+                text-align: center; /* テキストを中央揃えに */
             }
         }
 
         /* スマートフォン対応用のメディアクエリ */
-        @media screen and (max-width: 1000px) {
+        @media screen and (max-width: 600px) {
             h1 {
-                font-size: 16vw; /* より小さい画面でのフォントサイズを調整 */
+                font-size: 8vw; /* より小さい画面でのフォントサイズを調整 */
             }
             textarea {
                 height: 120px; /* スマートフォン向けに高さをさらに調整 */
@@ -142,7 +149,7 @@
                 font-size: 14px; /* スマートフォン用のボタンのフォントサイズを調整 */
             }
             #fly-text {
-                font-size: 8w; /* スマートフォン用の飛び出す文字サイズ */
+                font-size: 4vw; /* スマートフォン用の飛び出す文字サイズ */
             }
         }
     </style>
