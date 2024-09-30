@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>想いを宇宙へ</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://ryosuke0525.github.io/ryosuke.github.io/01@2x.jpg'); /* 初期画面の背景画像を設定 */
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        h1 {
+            position: relative;
+            z-index: 20; /* 背景画像よりも前面に表示 */
+            background-color: rgba(0, 0, 0, 0.5); /* 背景に黒を少し入れて、見やすくする */
+            padding: 10px;
+            border-radius: 10px;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* シャドウで文字が背景に溶け込まないように */
+        }
+        #form-container {
+            margin-top: 20px;
+            position: relative;
+            z-index: 20;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center; /* フォームを中央に配置 */
+        }
+        textarea {
+            width: 180%; /* 横幅を3倍に調整 */
+            max-width: 2200px; /* 横幅の最大サイズを指定 */
+            height: 200px; /* 高さを200pxに戻しました */
+            font-size: 18px;
+            padding: 15px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #fff; /* テキストの色を白に変更 */
+            border: 1px solid #fff;
+            resize: none;
+        }
+        textarea::placeholder {
+            color: #fff; /* プレースホルダーの文字色を白に変更 */
+        }
+        button {
+            padding: 12px 24px;
+            font-size: 18px;
+            margin-top: 10px;
+            cursor: pointer;
+            background-color: rgba(255, 255, 255, 0.3);
+            border: 1px solid #fff;
+            color: #fff;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+        #fly-text {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            white-space: pre-wrap;
+            text-align: center;
+            z-index: 20; /* 背景画像よりも前面に表示 */
+        }
+        .message {
+            display: none;
+            margin-top: 20px;
+            font-size: 18px;
+        }
+        .image-sequence {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            display: none;
+            z-index: 10; /* 背景画像はテキストよりも後ろに表示 */
+            opacity: 0;
+            transition: opacity 1s ease-in-out; /* フェード効果の追加 */
+        }
+        #retry-btn {
+            display: none;
+            padding: 12px 24px;
+            font-size: 18px;
+            cursor: pointer;
+            background-color: rgba(255, 255, 255, 0.3);
+            border: 1px solid #fff;
+            color: #fff;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+            position: relative;
+            z-index: 30; /* リトライボタンを最前面に表示 */
+        }
+        #retry-btn:hover {
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+        @keyframes floatUp {
+            0% {
+                transform: translate(-50%, -50%);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -200%);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1 id="main-title">あなたの想いを宇宙へ飛ばそう！</h1>
+
+    <div id="form-container">
+        <textarea id="thoughts" placeholder="ここにあなたの想いを書いてください"></textarea><br>
+        <button onclick="sendThought()">想いを飛ばす</button>
+    </div>
+
+    <div id="fly-text"></div>
+
+    <div class="message" id="successMessage">あなたの想いは宇宙へ飛び立ちました！</div>
+
+    <!-- 画像を5枚用意 -->
+    <img src="https://ryosuke0525.github.io/ryosuke.github.io/%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88%202024-10-01%20001642.png" class="image-sequence" id="image1" alt="Sequence Image 1">
+    <img src="https://ryosuke0525.github.io/ryosuke.github.io/%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88%202024-10-01%20001700.png" class="image-sequence" id="image2" alt="Sequence Image 2">
+    <img src="https://ryosuke0525.github.io/ryosuke.github.io/%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88%202024-10-01%20001717.png" class="image-sequence" id="image3" alt="Sequence Image 3">
+    <img src="https://ryosuke0525.github.io/ryosuke.github.io/%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88%202024-10-01%20001740.png" class="image-sequence" id="image4" alt="Sequence Image 4">
+    <img src="https://ryosuke0525.github.io/ryosuke.github.io/%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88%202024-09-21%20095840.png" class="image-sequence" id="image5" alt="Sequence Image 5">
+
+    <button id="retry-btn" onclick="retry()">もう一度やり直す</button>
+
+    <script>
+        function sendThought() {
+            const textarea = document.getElementById('thoughts');
+            const flyText = document.getElementById('fly-text');
+            const formContainer = document.getElementById('form-container');
+            const retryBtn = document.getElementById('retry-btn');
+            const mainTitle = document.getElementById('main-title');
+            const images = ['image1', 'image2', 'image3', 'image4', 'image5'];
+
+            // 初期背景を消し、1枚目から切り替えを開始する
+            document.body.style.backgroundImage = 'none';
+
+            // テキストエリアの内容を取得して中央に表示
+            flyText.textContent = textarea.value;
+
+            // ボタンを押した瞬間にフォームとタイトルを非表示にする
+            formContainer.style.display = 'none';
+            mainTitle.style.display = 'none';
+
+            let currentImageIndex = 0;
+
+            // 2秒ごとに画像を切り替え
+            const imageInterval = setInterval(() => {
+                // すべての画像を一度非表示にする
+                images.forEach(imageId => {
+                    document.getElementById(imageId).style.display = 'none';
+                    document.getElementById(imageId).style.opacity = '0';
+                });
+                
+                // 次の画像をフェードインで表示
+                if (currentImageIndex < images.length) {
+                    const nextImage = document.getElementById(images[currentImageIndex]);
+                    nextImage.style.display = 'block';
+                    setTimeout(() => {
+                        nextImage.style.opacity = '1';
+                    }, 100); // 100ミリ秒の遅延でフェードイン開始
+                    currentImageIndex++;
+                }
+
+                // 5枚目の画像が表示されたら4秒後にテキストを浮き上がらせて消す
+                if (currentImageIndex === images.length) {
+                    clearInterval(imageInterval);
+                    setTimeout(() => {
+                        flyText.style.animation = 'floatUp 3s ease-out forwards'; // 文字が浮き上がって消える
+                    }, 4000); // 4秒後にテキストを浮き上がらせるアニメーション開始
+
+                    setTimeout(() => {
+                        retryBtn.style.display = 'block'; // テキストが消えた5秒後にやり直しボタンを表示
+                    }, 9000); // 9秒後にリトライボタンを表示
+                }
+            }, 2000); // 2秒ごとに画像を切り替える
+        }
+
+        function retry() {
+            const formContainer = document.getElementById('form-container');
+            const flyText = document.getElementById('fly-text');
+            const retryBtn = document.getElementById('retry-btn');
+            const mainTitle = document.getElementById('main-title');
+            const images = ['image1', 'image2', 'image3', 'image4', 'image5'];
+            const textarea = document.getElementById('thoughts');
+
+            // 画像をすべて非表示にし、初期画面を再表示
+            images.forEach(imageId => {
+                document.getElementById(imageId).style.display = 'none';
+            });
+
+            document.body.style.backgroundImage = 'url(https://ryosuke0525.github.io/ryosuke.github.io/01@2x.jpg)'; // 初期背景を戻す
+
+            flyText.textContent = '';
+            flyText.style.display = 'block';
+            flyText.style.animation = ''; // アニメーションをリセット
+            formContainer.style.display = 'flex'; // フォームを中央に再配置
+            formContainer.style.flexDirection = 'column';
+            formContainer.style.justifyContent = 'center';
+            formContainer.style.alignItems = 'center';
+            mainTitle.style.display = 'block';
+            retryBtn.style.display = 'none'; // やり直しボタンを非表示にする
+
+            // テキストボックスの内容をクリア
+            textarea.value = '';
+        }
+    </script>
+
+</body>
+</html>
