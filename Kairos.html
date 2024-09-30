@@ -29,6 +29,7 @@
             border-radius: 10px;
             color: #fff;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* シャドウで文字が背景に溶け込まないように */
+            font-size: 2vw; /* 画面幅に応じたフォントサイズに変更 */
         }
         #form-container {
             margin-top: 20px;
@@ -40,11 +41,11 @@
             align-items: center; /* フォームを中央に配置 */
         }
         textarea {
-            width: 180%; /* 横幅を3倍に調整 */
-            max-width: 2200px; /* 横幅の最大サイズを指定 */
-            height: 200px; /* 高さを200pxに戻しました */
-            font-size: 18px;
-            padding: 15px;
+            width: 200%; /* 横幅を動的に調整 */
+            max-width: 800px; /* 最大横幅を制限 */
+            height: 150px; /* スマートフォン対応の高さに調整 */
+            font-size: 16px; /* スマートフォン対応のフォントサイズ */
+            padding: 10px;
             background-color: rgba(0, 0, 0, 0.5);
             color: #fff; /* テキストの色を白に変更 */
             border: 1px solid #fff;
@@ -55,7 +56,7 @@
         }
         button {
             padding: 12px 24px;
-            font-size: 18px;
+            font-size: 16px; /* ボタンのフォントサイズも調整 */
             margin-top: 10px;
             cursor: pointer;
             background-color: rgba(255, 255, 255, 0.3);
@@ -71,7 +72,7 @@
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
-            font-size: 24px;
+            font-size: 5vw; /* 画面幅に応じたフォントサイズに変更 */
             white-space: pre-wrap;
             text-align: center;
             z-index: 20; /* 背景画像よりも前面に表示 */
@@ -96,7 +97,7 @@
         #retry-btn {
             display: none;
             padding: 12px 24px;
-            font-size: 18px;
+            font-size: 16px; /* スマートフォン対応のフォントサイズに調整 */
             cursor: pointer;
             background-color: rgba(255, 255, 255, 0.3);
             border: 1px solid #fff;
@@ -117,6 +118,23 @@
             100% {
                 transform: translate(-50%, -200%);
                 opacity: 0;
+            }
+        }
+
+        /* スマートフォン対応用のメディアクエリ */
+        @media screen and (max-width: 600px) {
+            h1 {
+                font-size: 8vw; /* より小さい画面でのフォントサイズを調整 */
+            }
+            textarea {
+                height: 120px; /* スマートフォン向けに高さをさらに調整 */
+                font-size: 14px; /* スマートフォン向けにフォントサイズを調整 */
+            }
+            button {
+                font-size: 14px; /* スマートフォン用のボタンのフォントサイズを調整 */
+            }
+            #fly-text {
+                font-size: 4vw; /* スマートフォン用の飛び出す文字サイズ */
             }
         }
     </style>
