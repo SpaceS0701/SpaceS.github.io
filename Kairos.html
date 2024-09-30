@@ -173,8 +173,14 @@
             // 初期背景を消し、1枚目から切り替えを開始する
             document.body.style.backgroundImage = 'none';
 
-            // テキストエリアの内容を取得して中央に表示
-            flyText.textContent = textarea.value;
+            // テキストエリアの内容を取得
+            const thoughtText = textarea.value;
+
+            // テキストエリアの内容を中央に表示
+            flyText.textContent = thoughtText;
+
+            // テキストの長さに応じてフォントサイズを調整
+            adjustFontSize(flyText, thoughtText);
 
             // ボタンを押した瞬間にフォームとタイトルを非表示にする
             formContainer.style.display = 'none';
@@ -189,7 +195,7 @@
                     document.getElementById(imageId).style.display = 'none';
                     document.getElementById(imageId).style.opacity = '0';
                 });
-                
+
                 // 次の画像をフェードインで表示
                 if (currentImageIndex < images.length) {
                     const nextImage = document.getElementById(images[currentImageIndex]);
@@ -212,6 +218,18 @@
                     }, 9000); // 9秒後にリトライボタンを表示
                 }
             }, 2000); // 2秒ごとに画像を切り替える
+        }
+
+        function adjustFontSize(flyText, thoughtText) {
+            const baseFontSize = 5; // 基本のフォントサイズ (vw単位)
+            const maxTextLength = 100; // テキストの長さがこれを超えるとフォントサイズを縮小
+
+            if (thoughtText.length > maxTextLength) {
+                const fontSize = baseFontSize * (maxTextLength / thoughtText.length); // テキストの長さに応じてフォントサイズを調整
+                flyText.style.fontSize = `${fontSize}vw`;
+            } else {
+                flyText.style.fontSize = `${baseFontSize}vw`;
+            }
         }
 
         function retry() {
