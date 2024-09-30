@@ -221,8 +221,8 @@
         }
 
         function adjustFontSize(flyText, thoughtText) {
-            const baseFontSize = 5; // 基本のフォントサイズ (vw単位)
-            const maxTextLength = 100; // テキストの長さがこれを超えるとフォントサイズを縮小
+            const baseFontSize = 2; // 基本のフォントサイズ (vw単位)
+            const maxTextLength = 30; // テキストの長さがこれを超えるとフォントサイズを縮小
 
             if (thoughtText.length > maxTextLength) {
                 const fontSize = baseFontSize * (maxTextLength / thoughtText.length); // テキストの長さに応じてフォントサイズを調整
