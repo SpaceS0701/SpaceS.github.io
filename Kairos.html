@@ -121,6 +121,14 @@
             }
         }
 
+        /* 縦長画面（スマートフォンなど）用のスタイル */
+        @media screen and (max-height: 700px) {
+            textarea {
+                width: 100%; /* 画面幅いっぱいに調整 */
+                max-width: 100%; /* 最大幅も100%に */
+            }
+        }
+
         /* スマートフォン対応用のメディアクエリ */
         @media screen and (max-width: 600px) {
             h1 {
