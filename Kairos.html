@@ -111,46 +111,11 @@
         #retry-btn:hover {
             background-color: rgba(255, 255, 255, 0.5);
         }
-        @keyframes floatUp {
-            0% {
-                transform: translate(-50%, -50%);
-                opacity: 1;
-            }
-            100% {
-                transform: translate(-50%, -200%);
-                opacity: 0;
-            }
-        }
 
-        /* 縦長画面（スマートフォンなど）用のスタイル */
-        @media screen and (max-height: 700px) {
-            textarea {
-                width: 100%; /* 画面幅いっぱいに調整 */
-                max-width: 100%; /* 最大幅も100%に */
-            }
-            #fly-text {
-                width: 100%; /* テキスト表示エリアを画面幅いっぱいにする */
-                left: 0; /* 左端に寄せる */
-                transform: translate(0, -50%); /* 中央に戻す */
-                text-align: center; /* テキストを中央揃えに */
-            }
-        }
-
-        /* スマートフォン対応用のメディアクエリ */
-        @media screen and (max-width: 600px) {
-            h1 {
-                font-size: 8vw; /* より小さい画面でのフォントサイズを調整 */
-            }
-            textarea {
-                height: 120px; /* スマートフォン向けに高さをさらに調整 */
-                font-size: 14px; /* スマートフォン向けにフォントサイズを調整 */
-            }
-            button {
-                font-size: 14px; /* スマートフォン用のボタンのフォントサイズを調整 */
-            }
-            #fly-text {
-                font-size: 8vw; /* スマートフォン用の飛び出す文字サイズ */
-            }
+        #answer-count {
+            margin-top: 10px;
+            font-size: 1.5vw;
+            color: #fff;
         }
         
     </style>
@@ -158,6 +123,9 @@
 <body>
 
     <h1 id="main-title">あなたの想いを宇宙へ飛ばそう！</h1>
+
+    <!-- 回答数を表示 -->
+    <div id="answer-count">これまでに<span id="count-display">0</span>件の想いが送られました。</div>
 
     <div id="form-container">
         <textarea id="thoughts" placeholder="誰にも言えないような、そんなあなたの想いを書いてください。"></textarea><br>
@@ -178,6 +146,12 @@
     <button id="retry-btn" onclick="retry()">もっと吐き出す。</button>
 
     <script>
+        // ページ読み込み時にローカルストレージからカウントを取得して表示
+        window.onload = function() {
+            const count = localStorage.getItem('thoughtCount') || 0;
+            document.getElementById('count-display').textContent = count;
+        }
+
         function sendThought() {
             const textarea = document.getElementById('thoughts');
             const flyText = document.getElementById('fly-text');
@@ -195,9 +169,6 @@
             // テキストエリアの内容を中央に表示
             flyText.textContent = thoughtText;
 
-            // テキストの長さに応じてフォントサイズを調整
-            adjustFontSize(flyText, thoughtText);
-
             // ボタンを押した瞬間にフォームとタイトルを非表示にする
             formContainer.style.display = 'none';
             mainTitle.style.display = 'none';
@@ -206,46 +177,39 @@
 
             // 2秒ごとに画像を切り替え
             const imageInterval = setInterval(() => {
-                // すべての画像を一度非表示にする
                 images.forEach(imageId => {
                     document.getElementById(imageId).style.display = 'none';
                     document.getElementById(imageId).style.opacity = '0';
                 });
 
-                // 次の画像をフェードインで表示
                 if (currentImageIndex < images.length) {
                     const nextImage = document.getElementById(images[currentImageIndex]);
                     nextImage.style.display = 'block';
                     setTimeout(() => {
                         nextImage.style.opacity = '1';
-                    }, 100); // 100ミリ秒の遅延でフェードイン開始
+                    }, 100);
                     currentImageIndex++;
                 }
 
-                // 5枚目の画像が表示されたら4秒後にテキストを浮き上がらせて消す
                 if (currentImageIndex === images.length) {
                     clearInterval(imageInterval);
                     setTimeout(() => {
-                        flyText.style.animation = 'floatUp 3s ease-out forwards'; // 文字が浮き上がって消える
-                    }, 4000); // 4秒後にテキストを浮き上がらせるアニメーション開始
+                        flyText.style.animation = 'floatUp 3s ease-out forwards';
+                    }, 4000);
 
                     setTimeout(() => {
-                        retryBtn.style.display = 'block'; // テキストが消えた5秒後にやり直しボタンを表示
-                    }, 9000); // 9秒後にリトライボタンを表示
+                        retryBtn.style.display = 'block';
+                    }, 9000);
                 }
-            }, 2000); // 2秒ごとに画像を切り替える
-        }
+            }, 2000);
 
-        function adjustFontSize(flyText, thoughtText) {
-            const baseFontSize = 3; // 基本のフォントサイズ (vw単位)
-            const maxTextLength = 80; // テキストの長さがこれを超えるとフォントサイズを縮小
+            // カウントを増やしてローカルストレージに保存
+            let count = localStorage.getItem('thoughtCount') || 0;
+            count++;
+            localStorage.setItem('thoughtCount', count);
 
-            if (thoughtText.length > maxTextLength) {
-                const fontSize = baseFontSize * (maxTextLength / thoughtText.length); // テキストの長さに応じてフォントサイズを調整
-                flyText.style.fontSize = `${fontSize}vw`;
-            } else {
-                flyText.style.fontSize = `${baseFontSize}vw`;
-            }
+            // カウントを更新して表示
+            document.getElementById('count-display').textContent = count;
         }
 
         function retry() {
@@ -256,7 +220,6 @@
             const images = ['image1', 'image2', 'image3', 'image4', 'image5'];
             const textarea = document.getElementById('thoughts');
 
-            // 画像をすべて非表示にし、初期画面を再表示
             images.forEach(imageId => {
                 document.getElementById(imageId).style.display = 'none';
             });
@@ -265,15 +228,14 @@
 
             flyText.textContent = '';
             flyText.style.display = 'block';
-            flyText.style.animation = ''; // アニメーションをリセット
-            formContainer.style.display = 'flex'; // フォームを中央に再配置
+            flyText.style.animation = '';
+            formContainer.style.display = 'flex';
             formContainer.style.flexDirection = 'column';
             formContainer.style.justifyContent = 'center';
             formContainer.style.alignItems = 'center';
             mainTitle.style.display = 'block';
-            retryBtn.style.display = 'none'; // やり直しボタンを非表示にする
+            retryBtn.style.display = 'none'; 
 
-            // テキストボックスの内容をクリア
             textarea.value = '';
         }
     </script>
