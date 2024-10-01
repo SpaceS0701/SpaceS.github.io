@@ -7,7 +7,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-image: url('https://ryosuke0525.github.io/ryosuke.github.io/01@2x.jpg'); /* 初期画面の背景画像を設定 */
+            background-image: url('https://ryosuke0525.github.io/ryosuke.github.io/01@2x.jpg'); 
             background-size: cover;
             background-position: center;
             color: #fff;
@@ -23,13 +23,13 @@
         }
         h1 {
             position: relative;
-            z-index: 20; /* 背景画像よりも前面に表示 */
-            background-color: rgba(0, 0, 0, 0.5); /* 背景に黒を少し入れて、見やすくする */
+            z-index: 20; 
+            background-color: rgba(0, 0, 0, 0.5); 
             padding: 10px;
             border-radius: 10px;
             color: #fff;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* シャドウで文字が背景に溶け込まないように */
-            font-size: 2vw; /* 画面幅に応じたフォントサイズに変更 */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            font-size: 2vw; 
         }
         #form-container {
             margin-top: 20px;
@@ -38,25 +38,25 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            align-items: center; /* フォームを中央に配置 */
+            align-items: center; 
         }
         textarea {
-            width: 200%; /* 横幅を動的に調整 */
-            max-width: 800px; /* 最大横幅を制限 */
-            height: 150px; /* スマートフォン対応の高さに調整 */
-            font-size: 16px; /* スマートフォン対応のフォントサイズ */
+            width: 200%; 
+            max-width: 800px;
+            height: 150px; 
+            font-size: 16px;
             padding: 10px;
             background-color: rgba(0, 0, 0, 0.5);
-            color: #fff; /* テキストの色を白に変更 */
+            color: #fff;
             border: 1px solid #fff;
             resize: none;
         }
         textarea::placeholder {
-            color: #fff; /* プレースホルダーの文字色を白に変更 */
+            color: #fff; 
         }
         button {
             padding: 12px 24px;
-            font-size: 16px; /* ボタンのフォントサイズも調整 */
+            font-size: 16px; 
             margin-top: 10px;
             cursor: pointer;
             background-color: rgba(255, 255, 255, 0.3);
@@ -72,11 +72,11 @@
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
-            font-size: 5vw; /* 画面幅に応じたフォントサイズに変更 */
+            font-size: 5vw;
             white-space: pre-wrap;
             text-align: center;
-            z-index: 20; /* 背景画像よりも前面に表示 */
-            width: 80%; /* 追加: テキストエリアの横幅を指定 */
+            z-index: 20;
+            width: 80%; 
         }
         .message {
             display: none;
@@ -91,14 +91,14 @@
             height: 100vh;
             object-fit: cover;
             display: none;
-            z-index: 10; /* 背景画像はテキストよりも後ろに表示 */
+            z-index: 10;
             opacity: 0;
-            transition: opacity 1s ease-in-out; /* フェード効果の追加 */
+            transition: opacity 1s ease-in-out; 
         }
         #retry-btn {
             display: none;
             padding: 12px 24px;
-            font-size: 16px; /* スマートフォン対応のフォントサイズに調整 */
+            font-size: 16px;
             cursor: pointer;
             background-color: rgba(255, 255, 255, 0.3);
             border: 1px solid #fff;
@@ -106,26 +106,58 @@
             transition: background-color 0.3s ease;
             margin-top: 20px;
             position: relative;
-            z-index: 30; /* リトライボタンを最前面に表示 */
+            z-index: 30;
         }
         #retry-btn:hover {
             background-color: rgba(255, 255, 255, 0.5);
         }
-
-        #answer-count {
-            margin-top: 10px;
-            font-size: 1.5vw;
-            color: #fff;
+        @keyframes floatUp {
+            0% {
+                transform: translate(-50%, -50%);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -200%);
+                opacity: 0;
+            }
         }
-        
+
+        @media screen and (max-height: 700px) {
+            textarea {
+                width: 100%;
+                max-width: 100%;
+            }
+            #fly-text {
+                width: 100%;
+                left: 0;
+                transform: translate(0, -50%);
+                text-align: center;
+            }
+        }
+
+        @media screen and (max-width: 600px) {
+            h1 {
+                font-size: 8vw; 
+            }
+            textarea {
+                height: 120px;
+                font-size: 14px;
+            }
+            button {
+                font-size: 14px;
+            }
+            #fly-text {
+                font-size: 8vw;
+            }
+        }
     </style>
 </head>
 <body>
 
     <h1 id="main-title">あなたの想いを宇宙へ飛ばそう！</h1>
 
-    <!-- 回答数を表示 -->
-    <div id="answer-count">これまでに<span id="count-display">0</span>件の想いが送られました。</div>
+    <!-- フォームの右上に表示するカウント用の要素 -->
+    <div id="thought-count" style="position: absolute; top: 10px; right: 10px; color: white; font-size: 1.5em;"></div>
 
     <div id="form-container">
         <textarea id="thoughts" placeholder="誰にも言えないような、そんなあなたの想いを書いてください。"></textarea><br>
@@ -145,12 +177,35 @@
 
     <button id="retry-btn" onclick="retry()">もっと吐き出す。</button>
 
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.x/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.x/firebase-database.js"></script>
+
     <script>
-        // ページ読み込み時にローカルストレージからカウントを取得して表示
-        window.onload = function() {
-            const count = localStorage.getItem('thoughtCount') || 0;
-            document.getElementById('count-display').textContent = count;
-        }
+        // Firebase構成
+        const firebaseConfig = {
+          apiKey: "YOUR_API_KEY",
+          authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+          databaseURL: "https://YOUR_PROJECT_ID.firebaseio.com",
+          projectId: "YOUR_PROJECT_ID",
+          storageBucket: "YOUR_PROJECT_ID.appspot.com",
+          messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+          appId: "YOUR_APP_ID"
+        };
+
+        // Firebaseの初期化
+        const app = firebase.initializeApp(firebaseConfig);
+        const database = firebase.database(app);
+
+        document.addEventListener("DOMContentLoaded", function () {
+            // ページ読み込み時にFirebaseからカウントを取得して表示
+            const thoughtCountRef = firebase.database().ref('thoughtCount');
+            
+            thoughtCountRef.on('value', (snapshot) => {
+                const count = snapshot.val();
+                document.getElementById('thought-count').textContent = `送信数: ${count}`;
+            });
+        });
 
         function sendThought() {
             const textarea = document.getElementById('thoughts');
@@ -169,6 +224,9 @@
             // テキストエリアの内容を中央に表示
             flyText.textContent = thoughtText;
 
+            // テキストの長さに応じてフォントサイズを調整
+            adjustFontSize(flyText, thoughtText);
+
             // ボタンを押した瞬間にフォームとタイトルを非表示にする
             formContainer.style.display = 'none';
             mainTitle.style.display = 'none';
@@ -177,39 +235,52 @@
 
             // 2秒ごとに画像を切り替え
             const imageInterval = setInterval(() => {
+                // すべての画像を一度非表示にする
                 images.forEach(imageId => {
                     document.getElementById(imageId).style.display = 'none';
                     document.getElementById(imageId).style.opacity = '0';
                 });
 
+                // 次の画像をフェードインで表示
                 if (currentImageIndex < images.length) {
                     const nextImage = document.getElementById(images[currentImageIndex]);
                     nextImage.style.display = 'block';
                     setTimeout(() => {
                         nextImage.style.opacity = '1';
-                    }, 100);
+                    }, 100); // 100ミリ秒の遅延でフェードイン開始
                     currentImageIndex++;
                 }
 
+                // 5枚目の画像が表示されたら4秒後にテキストを浮き上がらせて消す
                 if (currentImageIndex === images.length) {
                     clearInterval(imageInterval);
                     setTimeout(() => {
-                        flyText.style.animation = 'floatUp 3s ease-out forwards';
-                    }, 4000);
+                        flyText.style.animation = 'floatUp 3s ease-out forwards'; // 文字が浮き上がって消える
+                    }, 4000); // 4秒後にテキストを浮き上がらせるアニメーション開始
 
                     setTimeout(() => {
-                        retryBtn.style.display = 'block';
-                    }, 9000);
+                        retryBtn.style.display = 'block'; // テキストが消えた5秒後にやり直しボタンを表示
+                    }, 9000); // 9秒後にリトライボタンを表示
                 }
-            }, 2000);
+            }, 2000); // 2秒ごとに画像を切り替える
 
-            // カウントを増やしてローカルストレージに保存
-            let count = localStorage.getItem('thoughtCount') || 0;
-            count++;
-            localStorage.setItem('thoughtCount', count);
+            // FirebaseのthoughtCountをインクリメント
+            const thoughtCountRef = firebase.database().ref('thoughtCount');
+            thoughtCountRef.transaction(currentCount => {
+                return (currentCount || 0) + 1;
+            });
+        }
 
-            // カウントを更新して表示
-            document.getElementById('count-display').textContent = count;
+        function adjustFontSize(flyText, thoughtText) {
+            const baseFontSize = 3; 
+            const maxTextLength = 80;
+
+            if (thoughtText.length > maxTextLength) {
+                const fontSize = baseFontSize * (maxTextLength / thoughtText.length); 
+                flyText.style.fontSize = `${fontSize}vw`;
+            } else {
+                flyText.style.fontSize = `${baseFontSize}vw`;
+            }
         }
 
         function retry() {
@@ -220,22 +291,24 @@
             const images = ['image1', 'image2', 'image3', 'image4', 'image5'];
             const textarea = document.getElementById('thoughts');
 
+            // 画像をすべて非表示にし、初期画面を再表示
             images.forEach(imageId => {
                 document.getElementById(imageId).style.display = 'none';
             });
 
-            document.body.style.backgroundImage = 'url(https://ryosuke0525.github.io/ryosuke.github.io/01@2x.jpg)'; // 初期背景を戻す
+            document.body.style.backgroundImage = 'url(https://ryosuke0525.github.io/ryosuke.github.io/01@2x.jpg)'; 
 
             flyText.textContent = '';
             flyText.style.display = 'block';
-            flyText.style.animation = '';
-            formContainer.style.display = 'flex';
+            flyText.style.animation = ''; 
+            formContainer.style.display = 'flex'; 
             formContainer.style.flexDirection = 'column';
             formContainer.style.justifyContent = 'center';
             formContainer.style.alignItems = 'center';
             mainTitle.style.display = 'block';
             retryBtn.style.display = 'none'; 
 
+            // テキストボックスの内容をクリア
             textarea.value = '';
         }
     </script>
