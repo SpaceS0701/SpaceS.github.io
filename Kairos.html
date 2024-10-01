@@ -7,7 +7,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-image: url('https://ryosuke0525.github.io/ryosuke.github.io/01@2x.jpg'); 
+            background-image: url('https://ryosuke0525.github.io/ryosuke.github.io/01@2x.jpg');
             background-size: cover;
             background-position: center;
             color: #fff;
@@ -23,13 +23,13 @@
         }
         h1 {
             position: relative;
-            z-index: 20; 
-            background-color: rgba(0, 0, 0, 0.5); 
+            z-index: 20;
+            background-color: rgba(0, 0, 0, 0.5);
             padding: 10px;
             border-radius: 10px;
             color: #fff;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-            font-size: 2vw; 
+            font-size: 2vw;
         }
         #form-container {
             margin-top: 20px;
@@ -38,12 +38,12 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            align-items: center; 
+            align-items: center;
         }
         textarea {
-            width: 200%; 
+            width: 200%;
             max-width: 800px;
-            height: 150px; 
+            height: 150px;
             font-size: 16px;
             padding: 10px;
             background-color: rgba(0, 0, 0, 0.5);
@@ -52,11 +52,11 @@
             resize: none;
         }
         textarea::placeholder {
-            color: #fff; 
+            color: #fff;
         }
         button {
             padding: 12px 24px;
-            font-size: 16px; 
+            font-size: 16px;
             margin-top: 10px;
             cursor: pointer;
             background-color: rgba(255, 255, 255, 0.3);
@@ -76,7 +76,7 @@
             white-space: pre-wrap;
             text-align: center;
             z-index: 20;
-            width: 80%; 
+            width: 80%;
         }
         .message {
             display: none;
@@ -93,7 +93,7 @@
             display: none;
             z-index: 10;
             opacity: 0;
-            transition: opacity 1s ease-in-out; 
+            transition: opacity 1s ease-in-out;
         }
         #retry-btn {
             display: none;
@@ -137,7 +137,7 @@
 
         @media screen and (max-width: 600px) {
             h1 {
-                font-size: 8vw; 
+                font-size: 8vw;
             }
             textarea {
                 height: 120px;
@@ -157,7 +157,7 @@
     <h1 id="main-title">あなたの想いを宇宙へ飛ばそう！</h1>
 
     <!-- フォームの右上に表示するカウント用の要素 -->
-    <div id="thought-count" style="position: absolute; top: 10px; right: 10px; color: white; font-size: 1.5em;"></div>
+    <div id="thought-count" style="position: absolute; top: 10px; right: 10px; color: white; font-size: 1.5em;">送信数: 0</div>
 
     <div id="form-container">
         <textarea id="thoughts" placeholder="誰にも言えないような、そんなあなたの想いを書いてください。"></textarea><br>
@@ -184,29 +184,33 @@
     <script>
         // Firebase構成
         const firebaseConfig = {
-          apiKey: "YOUR_API_KEY",
-          authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-          databaseURL: "https://YOUR_PROJECT_ID.firebaseio.com",
-          projectId: "YOUR_PROJECT_ID",
-          storageBucket: "YOUR_PROJECT_ID.appspot.com",
-          messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-          appId: "YOUR_APP_ID"
+            apiKey: "AIzaSyArF6ozR1V6JiJfnrzutk7th7owRTh4KVo",
+            authDomain: "kairos-ab755.firebaseapp.com",
+            databaseURL: "https://kairos-ab755-default-rtdb.firebaseio.com",
+            projectId: "kairos-ab755",
+            storageBucket: "kairos-ab755.appspot.com",
+            messagingSenderId: "625244360848",
+            appId: "1:625244360848:web:c5f2f787a750aef2144815"
         };
 
         // Firebaseの初期化
         const app = firebase.initializeApp(firebaseConfig);
         const database = firebase.database(app);
 
+        // ページ読み込み時にカウントを取得して表示
         document.addEventListener("DOMContentLoaded", function () {
-            // ページ読み込み時にFirebaseからカウントを取得して表示
             const thoughtCountRef = firebase.database().ref('thoughtCount');
-            
             thoughtCountRef.on('value', (snapshot) => {
                 const count = snapshot.val();
-                document.getElementById('thought-count').textContent = `送信数: ${count}`;
+                if (count !== null) {
+                    document.getElementById('thought-count').textContent = `送信数: ${count}`;
+                } else {
+                    document.getElementById('thought-count').textContent = `送信数: 0`;
+                }
             });
         });
 
+        // 想いを送信してカウントを増加させる
         function sendThought() {
             const textarea = document.getElementById('thoughts');
             const flyText = document.getElementById('fly-text');
@@ -223,9 +227,6 @@
 
             // テキストエリアの内容を中央に表示
             flyText.textContent = thoughtText;
-
-            // テキストの長さに応じてフォントサイズを調整
-            adjustFontSize(flyText, thoughtText);
 
             // ボタンを押した瞬間にフォームとタイトルを非表示にする
             formContainer.style.display = 'none';
@@ -256,33 +257,29 @@
                     clearInterval(imageInterval);
                     setTimeout(() => {
                         flyText.style.animation = 'floatUp 3s ease-out forwards'; // 文字が浮き上がって消える
-                    }, 4000); // 4秒後にテキストを浮き上がらせるアニメーション開始
+                    }, 4000); 
 
                     setTimeout(() => {
                         retryBtn.style.display = 'block'; // テキストが消えた5秒後にやり直しボタンを表示
-                    }, 9000); // 9秒後にリトライボタンを表示
+                    }, 9000); 
                 }
-            }, 2000); // 2秒ごとに画像を切り替える
+            }, 2000); 
 
             // FirebaseのthoughtCountをインクリメント
             const thoughtCountRef = firebase.database().ref('thoughtCount');
-            thoughtCountRef.transaction(currentCount => {
-                return (currentCount || 0) + 1;
+            thoughtCountRef.transaction((currentCount) => {
+                if (currentCount === null) {
+                    return 1; // 初期値がnullなら1に設定
+                }
+                return currentCount + 1; // 現在のカウントに+1
+            }).then(() => {
+                console.log("カウントが増加しました");
+            }).catch((error) => {
+                console.error("カウントの増加に失敗しました: ", error);
             });
         }
 
-        function adjustFontSize(flyText, thoughtText) {
-            const baseFontSize = 3; 
-            const maxTextLength = 80;
-
-            if (thoughtText.length > maxTextLength) {
-                const fontSize = baseFontSize * (maxTextLength / thoughtText.length); 
-                flyText.style.fontSize = `${fontSize}vw`;
-            } else {
-                flyText.style.fontSize = `${baseFontSize}vw`;
-            }
-        }
-
+        // リトライ機能
         function retry() {
             const formContainer = document.getElementById('form-container');
             const flyText = document.getElementById('fly-text');
@@ -302,9 +299,6 @@
             flyText.style.display = 'block';
             flyText.style.animation = ''; 
             formContainer.style.display = 'flex'; 
-            formContainer.style.flexDirection = 'column';
-            formContainer.style.justifyContent = 'center';
-            formContainer.style.alignItems = 'center';
             mainTitle.style.display = 'block';
             retryBtn.style.display = 'none'; 
 
