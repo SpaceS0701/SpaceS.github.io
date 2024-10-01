@@ -149,10 +149,9 @@
                 font-size: 14px; /* スマートフォン用のボタンのフォントサイズを調整 */
             }
             #fly-text {
-                font-size: 8vw; /* スマートフォン用の飛び出す文字サイズ */
+                font-size: 4vw; /* スマートフォン用の飛び出す文字サイズ */
             }
         }
-        
     </style>
 </head>
 <body>
@@ -242,9 +241,9 @@
 
             if (thoughtText.length > maxTextLength) {
                 const fontSize = baseFontSize * (maxTextLength / thoughtText.length); // テキストの長さに応じてフォントサイズを調整
-                flyText.style.fontSize = ${fontSize}vw;
+                flyText.style.fontSize = `${fontSize}vw`;
             } else {
-                flyText.style.fontSize = ${baseFontSize}vw;
+                flyText.style.fontSize = `${baseFontSize}vw`;
             }
         }
 
