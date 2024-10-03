@@ -21,6 +21,34 @@
             align-items: center;
             overflow: hidden;
         }
+	
+
+        #nec-logo-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 50; /* 他の要素より前面に表示 */
+        }
+        
+        #nec-logo-container img {
+            width: 150px; /* ロゴの幅を指定 */
+            height: auto;
+        }
+	
+	#space-s-logo-container {
+    	    position: fixed;
+	    bottom: 15px;
+    	    right: 200px;
+    	    z-index: 50; /* 他の要素より前面に表示 */
+	}
+
+	#space-s-logo-container img {
+    	    width: 150px;
+    	    height: auto;
+	}
+
+
+
         h1 {
             position: relative;
             z-index: 20; /* 背景画像よりも前面に表示 */
@@ -184,6 +212,12 @@
             const retryBtn = document.getElementById('retry-btn');
             const mainTitle = document.getElementById('main-title');
             const images = ['image1', 'image2', 'image3', 'image4', 'image5'];
+            const necLogo = document.getElementById('nec-logo-container'); // NECロゴの取得
+            const space-sLogo = document.getElementById('space-s-logo-container'); // NECロゴの取得
+
+            // NECロゴを非表示にする
+            necLogo.style.display = 'none';
+            space-sLogo.style.display = 'none';
 
             // 初期背景を消し、1枚目から切り替えを開始する
             document.body.style.backgroundImage = 'none';
@@ -271,11 +305,25 @@
             formContainer.style.alignItems = 'center';
             mainTitle.style.display = 'block';
             retryBtn.style.display = 'none'; // やり直しボタンを非表示にする
+            necLogo.style.display = 'block';
+            space-sLogo.style.display = 'block';
 
             // テキストボックスの内容をクリア
             textarea.value = '';
         }
     </script>
+
+<div id="nec-logo-container">
+    <a href="https://jpn.nec.com/index.html" target="_blank">
+        <img src="https://spaces0701.github.io/SpaceS.github.io/NEC%20BluStellar.png" alt="NEC Logo" style="width: 150px; height: auto;">
+    </a>
+</div>
+
+<div id="space-s-logo-container">
+    <a href="https://sites.google.com/view/space-s-jp/?authuser=0" target="_blank">
+        <img src="https://spaces0701.github.io/SpaceS.github.io/Space%20S文字%20切り抜き.png" alt="Space S Logo" style="width: 150px; height: auto;">
+    </a>
+</div>
 
 </body>
 </html>
