@@ -21,9 +21,7 @@
             align-items: center;
             overflow: hidden;
         }
-	
-
-        #nec-logo-container {
+	#nec-logo-container {
             position: fixed;
             bottom: 20px;
             right: 20px;
@@ -46,9 +44,6 @@
     	    width: 150px;
     	    height: auto;
 	}
-
-
-
         h1 {
             position: relative;
             z-index: 20; /* 背景画像よりも前面に表示 */
@@ -104,7 +99,6 @@
             white-space: pre-wrap;
             text-align: center;
             z-index: 20; /* 背景画像よりも前面に表示 */
-            width: 80%; /* 追加: テキストエリアの横幅を指定 */
         }
         .message {
             display: none;
@@ -147,20 +141,6 @@
             100% {
                 transform: translate(-50%, -200%);
                 opacity: 0;
-            }
-        }
-
-        /* 縦長画面（スマートフォンなど）用のスタイル */
-        @media screen and (max-height: 700px) {
-            textarea {
-                width: 100%; /* 画面幅いっぱいに調整 */
-                max-width: 100%; /* 最大幅も100%に */
-            }
-            #fly-text {
-                width: 100%; /* テキスト表示エリアを画面幅いっぱいにする */
-                left: 0; /* 左端に寄せる */
-                transform: translate(0, -50%); /* 中央に戻す */
-                text-align: center; /* テキストを中央揃えに */
             }
         }
 
@@ -212,11 +192,12 @@
             const retryBtn = document.getElementById('retry-btn');
             const mainTitle = document.getElementById('main-title');
             const images = ['image1', 'image2', 'image3', 'image4', 'image5'];
-            const necLogo = document.getElementById('nec-logo-container'); // NECロゴの取得
-            const space-sLogo = document.getElementById('space-s-logo-container'); // NECロゴの取得
+	    const necLogo = document.getElementById('nec-logo-container'); // NECロゴの取得
+            const space-sLogo = document.getElementById('space-s-logo-container'); // SpaceSロゴの取得
 
             // NECロゴを非表示にする
             necLogo.style.display = 'none';
+	　　// SpaceSロゴを非表示にする
             space-sLogo.style.display = 'none';
 
             // 初期背景を消し、1枚目から切り替えを開始する
@@ -270,8 +251,8 @@
         }
 
         function adjustFontSize(flyText, thoughtText) {
-            const baseFontSize = 3; // 基本のフォントサイズ (vw単位)
-            const maxTextLength = 80; // テキストの長さがこれを超えるとフォントサイズを縮小
+            const baseFontSize = 5; // 基本のフォントサイズ (vw単位)
+            const maxTextLength = 100; // テキストの長さがこれを超えるとフォントサイズを縮小
 
             if (thoughtText.length > maxTextLength) {
                 const fontSize = baseFontSize * (maxTextLength / thoughtText.length); // テキストの長さに応じてフォントサイズを調整
@@ -307,7 +288,7 @@
             retryBtn.style.display = 'none'; // やり直しボタンを非表示にする
             necLogo.style.display = 'block';
             space-sLogo.style.display = 'block';
-
+		
             // テキストボックスの内容をクリア
             textarea.value = '';
         }
@@ -324,9 +305,8 @@
         <img src="https://spaces0701.github.io/SpaceS.github.io/Space%20S文字%20切り抜き.png" alt="Space S Logo" style="width: 150px; height: auto;">
     </a>
 </div>
-
+	
+	
 </body>
 </html>
-
-
 
