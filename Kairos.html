@@ -31,6 +31,33 @@
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* シャドウで文字が背景に溶け込まないように */
             font-size: 2vw; /* 画面幅に応じたフォントサイズに変更 */
         }
+
+        /* NECロゴの配置スタイル */
+        #nec-logo-container{
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 50; /* 他の要素より前面に表示 */
+        }
+        
+        #nec-logo-container img{
+            width: 150px; /* ロゴの幅を指定 */
+            height: auto;
+        }
+
+        /* Space Sロゴの配置スタイル */
+        #spaces-logo-container{
+            position:fixed;
+            bottom: 15px;
+            right: 200px;
+            z-index: 50;
+        }
+
+        #spaces-logo-container img{
+            width: 150px;
+            height: auto;
+        }
+        
         #form-container {
             margin-top: 20px;
             position: relative;
@@ -167,6 +194,21 @@
 
     <div class="message" id="successMessage">あなたの想いは宇宙へ飛び立ちました！</div>
 
+    <!-- NECのロゴを右下に配置 -->
+    <div id="nec-logo-container">
+        <a href="https://jpn.nec.com/index.html" target="_blank">
+            <img src="https://spaces0701.github.io/SpaceS.github.io/NEC%20BluStellar.png" alt="NEC logo">
+        </a>
+    </div>
+
+    <!-- Space Sのロゴを右下に配置 -->
+    <div id ="spaces-logo-container">
+        <a href="https://sites.google.com/view/space-s-jp/?authuser=0" target="_blank">
+            <img src="https://spaces0701.github.io/SpaceS.github.io/Space%20S文字%20切り抜き.png" alt="Space S logo">
+        </a>
+    </div>
+
+            
     <!-- 画像を5枚用意 -->
     <img src="https://ryosuke0525.github.io/ryosuke.github.io/%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88%202024-10-01%20001642.png" class="image-sequence" id="image1" alt="Sequence Image 1">
     <img src="https://ryosuke0525.github.io/ryosuke.github.io/%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88%202024-10-01%20001700.png" class="image-sequence" id="image2" alt="Sequence Image 2">
@@ -184,7 +226,17 @@
             const retryBtn = document.getElementById('retry-btn');
             const mainTitle = document.getElementById('main-title');
             const images = ['image1', 'image2', 'image3', 'image4', 'image5'];
-
+            const necLogo = document.querySelector('#nec-logo-container img');
+            const spacesLogo = document.querySelector('#spaces-logo-container img');
+            
+            // ロゴを消す
+            if (necLogo) {
+                necLogo.style.display = 'none';
+            }
+            if (spacesLogo) {
+                spacesLogo.style.display = 'none';
+            }
+            
             // 初期背景を消し、1枚目から切り替えを開始する
             document.body.style.backgroundImage = 'none';
 
@@ -200,6 +252,8 @@
             // ボタンを押した瞬間にフォームとタイトルを非表示にする
             formContainer.style.display = 'none';
             mainTitle.style.display = 'none';
+            
+
 
             let currentImageIndex = 0;
 
@@ -254,6 +308,8 @@
             const mainTitle = document.getElementById('main-title');
             const images = ['image1', 'image2', 'image3', 'image4', 'image5'];
             const textarea = document.getElementById('thoughts');
+            const necLogo = document.querySelector('#nec-logo-container img');
+            const spacesLogo = document.querySelector('#spaces-logo-container img');
 
             // 画像をすべて非表示にし、初期画面を再表示
             images.forEach(imageId => {
@@ -272,6 +328,10 @@
             mainTitle.style.display = 'block';
             retryBtn.style.display = 'none'; // やり直しボタンを非表示にする
 
+            // ロゴを再表示
+            necLogo.style.display = 'block';
+            spacesLogo.style.display = 'block';
+            
             // テキストボックスの内容をクリア
             textarea.value = '';
         }
