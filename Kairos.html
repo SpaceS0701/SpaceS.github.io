@@ -13,9 +13,9 @@
             overflow: hidden;
             color: #fff;
             text-align: center;
-            display: flex;
+            /* display: flex;  削除: 縦中央揃えを解除 */
             justify-content: center;
-            align-items: center;
+            /* align-items: center; 削除: 縦中央揃えを解除 */
             position: relative;
             background-image: url('https://spaces0701.github.io/SpaceS.github.io/launch.jpg'); /* 正しいURLを使用 */
             background-size: cover;
@@ -28,12 +28,11 @@
             position: fixed;
             top: 0;
             left: 0;
-            width: 100vw;
-            height: 100vh;
-            object-fit: cover;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* ビデオが画面全体を覆うように */
             z-index: -2;
             display: none; /* 初期は非表示 */
-            preload: auto; /* 動画のプリロードを有効化 */
         }
 
         h1 {
@@ -45,6 +44,7 @@
             color: #fff;
             font-size: 6vw; /* モバイル向けに調整 */
             max-width: 90%;
+            margin: 20px auto; /* 上下のマージンを追加 */
         }
 
         /* ロゴコンテナの配置スタイルを右揃えに変更 */
@@ -65,16 +65,15 @@
         }
 
         #form-container {
-            position: absolute; /* 中央に配置するためにabsoluteに変更 */
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            /* 中央に配置するためのスタイルを変更 */
             z-index: 20;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             width: 90%;
+            margin: 0 auto; /* 横方向のみ中央揃え */
+            padding: 20px 0; /* 上下にパディングを追加 */
         }
 
         textarea {
@@ -226,8 +225,8 @@
             /* 動画サイズの調整 */
             #background-video {
                 width: 100%;
-                height: auto;
-                max-height: 70vh; /* 最大高さを設定 */
+                height: 100%; /* 高さを100%に設定 */
+                object-fit: cover; /* ビデオが画面全体を覆うように */
             }
 
             /* メッセージとリトライボタンの位置調整 */
@@ -350,11 +349,7 @@
                 backgroundVideo.play().catch(error => {
                     console.error("動画の再生に失敗しました:", error);
                 });
-                // モバイルでは自動再生を避ける
-                if (isMobile) {
-                    // モバイルではユーザーのアクションが必要な場合が多いため、再生がブロックされる可能性があります。
-                    // その場合、ユーザーに再生ボタンを提示するなどの対応が必要です。
-                }
+                // モバイルでは自動再生を避ける場合の対応は不要
             }
 
             // 背景動画の再生が終了したときの処理
