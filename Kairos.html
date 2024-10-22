@@ -7,57 +7,67 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-image: url('https://spaces0701.github.io/SpaceS.github.io/1.png'); /* 初期画面の背景画像を設定 */
-            background-size: cover;
-            background-position: center;
-            color: #fff;
-            text-align: center;
             margin: 0;
             padding: 0;
             height: 100vh;
+            overflow: hidden;
+            color: #fff;
+            text-align: center;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
+            position: relative;
+            background-image: url('https://ryosuke0525.github.io/ryosuke.github.io/launch.jpg'); /* 一枚の背景画像 */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
         }
+
+        /* 背景動画のスタイル（初期は非表示） */
+        #background-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            z-index: -2;
+            display: none; /* 初期は非表示 */
+        }
+
         h1 {
             position: relative;
-            z-index: 20; /* 背景画像よりも前面に表示 */
-            background-color: rgba(0, 0, 0, 0.5); /* 背景に黒を少し入れて、見やすくする */
-            padding: 10px;
+            z-index: 20; /* 背景より前面 */
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px 20px;
             border-radius: 10px;
             color: #fff;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* シャドウで文字が背景に溶け込まないように */
-            font-size: 2vw; /* 画面幅に応じたフォントサイズに変更 */
+            font-size: 6vw; /* モバイル向けに調整 */
+            max-width: 90%;
         }
 
-        /* NECロゴの配置スタイル */
-        #nec-logo-container{
+        /* ロゴの配置スタイル */
+        #nec-logo-container, #spaces-logo-container {
             position: fixed;
             bottom: 20px;
-            right: 20px;
             z-index: 50; /* 他の要素より前面に表示 */
         }
-        
-        #nec-logo-container img{
-            width: 150px; /* ロゴの幅を指定 */
-            height: auto;
+
+        #nec-logo-container {
+            left: 20px; /* 左下に配置 */
         }
 
-        /* Space Sロゴの配置スタイル */
-        #spaces-logo-container{
-            position:fixed;
-            bottom: 15px;
-            right: 200px;
-            z-index: 50;
+        #spaces-logo-container {
+            left: 120px; /* 左下に配置 */
         }
 
-        #spaces-logo-container img{
-            width: 150px;
+        #nec-logo-container img, #spaces-logo-container img {
+            width: 80px; /* モバイル向けに縮小 */
             height: auto;
+            max-height: 80px; /* 縦方向のサイズを固定 */
+            object-fit: contain;
         }
-        
+
         #form-container {
             margin-top: 20px;
             position: relative;
@@ -65,79 +75,92 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            align-items: center; /* フォームを中央に配置 */
+            align-items: center;
+            width: 90%;
         }
+
         textarea {
-            width: 200%; /* 横幅を動的に調整 */
-            max-width: 800px; /* 最大横幅を制限 */
-            height: 150px; /* スマートフォン対応の高さに調整 */
-            font-size: 16px; /* スマートフォン対応のフォントサイズ */
+            width: 100%;
+            max-width: 400px;
+            height: 100px;
+            font-size: 4vw;
             padding: 10px;
             background-color: rgba(0, 0, 0, 0.5);
-            color: #fff; /* テキストの色を白に変更 */
+            color: #fff;
             border: 1px solid #fff;
+            border-radius: 5px;
             resize: none;
         }
+
         textarea::placeholder {
-            color: #fff; /* プレースホルダーの文字色を白に変更 */
+            color: #fff;
         }
+
         button {
-            padding: 12px 24px;
-            font-size: 16px; /* ボタンのフォントサイズも調整 */
+            padding: 10px 20px;
+            font-size: 4vw;
             margin-top: 10px;
             cursor: pointer;
             background-color: rgba(255, 255, 255, 0.3);
             border: 1px solid #fff;
             color: #fff;
+            border-radius: 5px;
             transition: background-color 0.3s ease;
         }
+
         button:hover {
             background-color: rgba(255, 255, 255, 0.5);
         }
+
         #fly-text {
             position: absolute;
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
-            font-size: 5vw; /* 画面幅に応じたフォントサイズに変更 */
+            font-size: 8vw;
             white-space: pre-wrap;
             text-align: center;
-            z-index: 20; /* 背景画像よりも前面に表示 */
-            width: 80%; /* 追加: テキストエリアの横幅を指定 */
+            z-index: 20;
+            width: 80%;
+            display: none; /* 初期は非表示 */
+            color: #fff;
+            animation: none; /* 初期はアニメーションなし */
         }
+
         .message {
             display: none;
-            margin-top: 20px;
-            font-size: 18px;
-        }
-        .image-sequence {
+            font-size: 5vw;
+            background-color: rgba(0, 0, 0, 0.7); /* 背景色を強化 */
+            padding: 20px 30px;
+            border-radius: 10px;
             position: absolute;
-            left: 0;
-            top: 0;
-            width: 100vw;
-            height: 100vh;
-            object-fit: cover;
-            display: none;
-            z-index: 10; /* 背景画像はテキストよりも後ろに表示 */
-            opacity: 0;
-            transition: opacity 1s ease-in-out; /* フェード効果の追加 */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 25; /* メインタイトルより前面 */
         }
+
         #retry-btn {
             display: none;
-            padding: 12px 24px;
-            font-size: 16px; /* スマートフォン対応のフォントサイズに調整 */
+            padding: 10px 20px;
+            font-size: 4vw;
             cursor: pointer;
             background-color: rgba(255, 255, 255, 0.3);
             border: 1px solid #fff;
             color: #fff;
+            border-radius: 5px;
             transition: background-color 0.3s ease;
-            margin-top: 20px;
-            position: relative;
-            z-index: 30; /* リトライボタンを最前面に表示 */
+            position: absolute;
+            top: 60%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 30;
         }
+
         #retry-btn:hover {
             background-color: rgba(255, 255, 255, 0.5);
         }
+
         @keyframes floatUp {
             0% {
                 transform: translate(-50%, -50%);
@@ -149,76 +172,138 @@
             }
         }
 
-        /* 縦長画面（スマートフォンなど）用のスタイル */
-        @media screen and (max-height: 700px) {
-            textarea {
-                width: 100%; /* 画面幅いっぱいに調整 */
-                max-width: 100%; /* 最大幅も100%に */
+        /* メディアクエリの調整 */
+        @media screen and (min-width: 601px) {
+            /* デスクトップ向けスタイル */
+            #nec-logo-container img, #spaces-logo-container img {
+                width: 150px;
+                max-height: 150px; /* 縦方向のサイズを固定 */
             }
+
+            h1 {
+                font-size: 2vw;
+            }
+
+            textarea {
+                height: 150px;
+                font-size: 16px;
+            }
+
+            button, #retry-btn {
+                font-size: 16px;
+            }
+
             #fly-text {
-                width: 100%; /* テキスト表示エリアを画面幅いっぱいにする */
-                left: 0; /* 左端に寄せる */
-                transform: translate(0, -50%); /* 中央に戻す */
-                text-align: center; /* テキストを中央揃えに */
+                font-size: 5vw;
+            }
+
+            .message {
+                font-size: 3vw;
             }
         }
 
-        /* スマートフォン対応用のメディアクエリ */
         @media screen and (max-width: 600px) {
+            /* スマートフォン向けスタイル */
+            #spaces-logo-container {
+                left: 100px; /* ロゴ間のスペースを調整 */
+            }
+
             h1 {
-                font-size: 8vw; /* より小さい画面でのフォントサイズを調整 */
+                font-size: 6vw;
             }
+
             textarea {
-                height: 120px; /* スマートフォン向けに高さをさらに調整 */
-                font-size: 14px; /* スマートフォン向けにフォントサイズを調整 */
+                height: 100px;
+                font-size: 4vw;
             }
-            button {
-                font-size: 14px; /* スマートフォン用のボタンのフォントサイズを調整 */
+
+            button, #retry-btn {
+                font-size: 4vw;
             }
+
             #fly-text {
-                font-size: 4vw; /* スマートフォン用の飛び出す文字サイズ */
+                font-size: 8vw;
+            }
+
+            .message {
+                font-size: 4vw;
+            }
+
+            /* 動画サイズの調整 */
+            #background-video {
+                width: 100%;
+                height: auto;
+                max-height: 70vh; /* 最大高さを設定 */
+            }
+
+            /* メッセージとリトライボタンの位置調整 */
+            .message {
+                padding: 15px 25px;
+            }
+
+            #retry-btn {
+                top: 65%;
+            }
+        }
+
+        @media screen and (max-height: 700px) {
+            textarea {
+                height: 120px;
+                font-size: 14px;
+            }
+
+            #fly-text {
+                width: 100%;
+                left: 0;
+                transform: translate(0, -50%);
+                text-align: center;
+            }
+
+            .message {
+                font-size: 4vw;
+            }
+
+            #retry-btn {
+                top: 70%;
             }
         }
     </style>
 </head>
 <body>
 
-    <h1 id="main-title">あなたの想いを宇宙へ飛ばそう！</h1>
+    <!-- 背景動画（初期は非表示） -->
+    <video id="background-video" muted playsinline>
+        <source src="https://ryosuke0525.github.io/ryosuke.github.io/space.mp4" type="video/mp4">
+        <!-- 必要に応じて他のフォーマットを追加 -->
+        お使いのブラウザは動画タグに対応していません。
+    </video>
 
-    <div id="form-container">
-        <textarea id="thoughts" placeholder="誰にも言えないような、そんなあなたの想いを書いてください。"></textarea><br>
-        <button onclick="sendThought()">想いを飛ばす</button>
+    <div id="container">
+        <h1 id="main-title">あなたの想いを宇宙へ飛ばそう！</h1>
+        <!-- フォーム -->
+        <div id="form-container">
+            <textarea id="thoughts" placeholder="誰にも言えないような、そんなあなたの想いを書いてください。"></textarea><br>
+            <button onclick="sendThought()">想いを飛ばす</button>
+        </div>
     </div>
 
     <div id="fly-text"></div>
 
     <div class="message" id="successMessage">あなたの想いは宇宙へ飛び立ちました！</div>
 
-    <!-- NECのロゴを右下に配置 -->
+    <!-- NECのロゴを左下に配置 -->
     <div id="nec-logo-container">
         <a href="https://jpn.nec.com/index.html" target="_blank">
             <img src="https://spaces0701.github.io/SpaceS.github.io/NEC%20BluStellar.png" alt="NEC logo">
         </a>
     </div>
 
-    <!-- Space Sのロゴを右下に配置 -->
-    <div id ="spaces-logo-container">
+    <!-- Space Sのロゴを左下に配置 -->
+    <div id="spaces-logo-container">
         <a href="https://sites.google.com/view/space-s-jp/?authuser=0" target="_blank">
             <img src="https://spaces0701.github.io/SpaceS.github.io/Space%20S文字%20切り抜き.png" alt="Space S logo">
         </a>
     </div>
-
-            
-    <!-- 画像を9枚用意 -->
-    <img src="https://spaces0701.github.io/SpaceS.github.io/2.png" class="image-sequence" id="image2" alt="Sequence Image 2">
-    <img src="https://spaces0701.github.io/SpaceS.github.io/3.png" class="image-sequence" id="image3" alt="Sequence Image 3">
-    <img src="https://spaces0701.github.io/SpaceS.github.io/4.png" class="image-sequence" id="image4" alt="Sequence Image 4">
-    <img src="https://spaces0701.github.io/SpaceS.github.io/5.png" class="image-sequence" id="image5" alt="Sequence Image 5">
-    <img src="https://spaces0701.github.io/SpaceS.github.io/6.png" class="image-sequence" id="image6" alt="Sequence Image 6">
-    <img src="https://spaces0701.github.io/SpaceS.github.io/7.png" class="image-sequence" id="image7" alt="Sequence Image 7">
-    <img src="https://spaces0701.github.io/SpaceS.github.io/8.png" class="image-sequence" id="image8" alt="Sequence Image 8">
-    <img src="https://spaces0701.github.io/SpaceS.github.io/9.png" class="image-sequence" id="image9" alt="Sequence Image 9">
-    <img src="https://spaces0701.github.io/SpaceS.github.io/10.png" class="image-sequence" id="image10" alt="Sequence Image 10">
 
     <button id="retry-btn" onclick="retry()">もっと吐き出す。</button>
 
@@ -229,10 +314,21 @@
             const formContainer = document.getElementById('form-container');
             const retryBtn = document.getElementById('retry-btn');
             const mainTitle = document.getElementById('main-title');
-            const images = ['image2', 'image3', 'image4', 'image5', 'image6', 'image7', 'image8', 'image9', 'image10'];
             const necLogo = document.querySelector('#nec-logo-container img');
             const spacesLogo = document.querySelector('#spaces-logo-container img');
-            
+            const backgroundVideo = document.getElementById('background-video');
+            const successMessage = document.getElementById('successMessage');
+
+            // テキストエリアの内容を取得
+            const thoughtText = textarea.value.trim();
+            // エラーメッセージを削除（入力がない場合の処理を無効化）
+            /*
+            if (thoughtText === "") {
+                alert("想いを入力してください。");
+                return;
+            }
+            */
+
             // ロゴを消す
             if (necLogo) {
                 necLogo.style.display = 'none';
@@ -240,62 +336,54 @@
             if (spacesLogo) {
                 spacesLogo.style.display = 'none';
             }
-            
-            // 初期背景を消し、1枚目から切り替えを開始する
-            document.body.style.backgroundImage = 'none';
 
-            // テキストエリアの内容を取得
-            const thoughtText = textarea.value;
+            // フォームとタイトルを非表示
+            formContainer.style.display = 'none';
+            mainTitle.style.display = 'none';
 
             // テキストエリアの内容を中央に表示
             flyText.textContent = thoughtText;
+            flyText.style.display = 'block';
 
-            // テキストの長さに応じてフォントサイズを調整
+            // フォントサイズを調整
             adjustFontSize(flyText, thoughtText);
 
-            // ボタンを押した瞬間にフォームとタイトルを非表示にする
-            formContainer.style.display = 'none';
-            mainTitle.style.display = 'none';
-            
+            // モバイルデバイスの判定
+            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
-
-            let currentImageIndex = 0;
-
-            // 2秒ごとに画像を切り替え
-            const imageInterval = setInterval(() => {
-                // すべての画像を一度非表示にする
-                images.forEach(imageId => {
-                    document.getElementById(imageId).style.display = 'none';
-                    document.getElementById(imageId).style.opacity = '0';
-                });
-
-                // 次の画像をフェードインで表示
-                if (currentImageIndex < images.length) {
-                    const nextImage = document.getElementById(images[currentImageIndex]);
-                    nextImage.style.display = 'block';
-                    setTimeout(() => {
-                        nextImage.style.opacity = '1';
-                    }, 100); // 100ミリ秒の遅延でフェードイン開始
-                    currentImageIndex++;
+            // 背景動画を表示して再生（ループしないように設定）
+            if (backgroundVideo) {
+                backgroundVideo.style.display = 'block';
+                backgroundVideo.loop = false; // ループ再生を無効化
+                if (!isMobile) {
+                    backgroundVideo.play();
                 }
+                // モバイルでは自動再生を避ける
+            }
 
-                // 5枚目の画像が表示されたら4秒後にテキストを浮き上がらせて消す
-                if (currentImageIndex === images.length) {
-                    clearInterval(imageInterval);
-                    setTimeout(() => {
-                        flyText.style.animation = 'floatUp 3s ease-out forwards'; // 文字が浮き上がって消える
-                    }, 4000); // 4秒後にテキストを浮き上がらせるアニメーション開始
+            // 背景動画の再生が終了したときの処理
+            backgroundVideo.addEventListener('ended', function handler() {
+                // 一度だけ実行されるようにイベントリスナーを削除
+                backgroundVideo.removeEventListener('ended', handler);
 
-                    setTimeout(() => {
-                        retryBtn.style.display = 'block'; // テキストが消えた5秒後にやり直しボタンを表示
-                    }, 9000); // 9秒後にリトライボタンを表示
-                }
-            }, 2000); // 2秒ごとに画像を切り替える
+                // 動画を停止し、最後のフレームを保持
+                backgroundVideo.pause();
+
+                // flyTextをアニメーションで消す
+                flyText.style.animation = 'floatUp 3s ease-out forwards';
+
+                // アニメーション完了後にメッセージとリトライボタンを表示
+                flyText.addEventListener('animationend', () => {
+                    flyText.style.display = 'none'; // アニメーション終了後に非表示にする
+                    successMessage.style.display = 'block';
+                    retryBtn.style.display = 'block';
+                }, { once: true }); // 一度だけ実行
+            });
         }
 
         function adjustFontSize(flyText, thoughtText) {
-            const baseFontSize = 3; // 基本のフォントサイズ (vw単位)
-            const maxTextLength = 80; // テキストの長さがこれを超えるとフォントサイズを縮小
+            const baseFontSize = 8; // 基本のフォントサイズ (vw単位)
+            const maxTextLength = 50; // テキストの長さがこれを超えるとフォントサイズを縮小
 
             if (thoughtText.length > maxTextLength) {
                 const fontSize = baseFontSize * (maxTextLength / thoughtText.length); // テキストの長さに応じてフォントサイズを調整
@@ -310,32 +398,40 @@
             const flyText = document.getElementById('fly-text');
             const retryBtn = document.getElementById('retry-btn');
             const mainTitle = document.getElementById('main-title');
-            const images = ['image1', 'image2', 'image3', 'image4', 'image5'];
             const textarea = document.getElementById('thoughts');
             const necLogo = document.querySelector('#nec-logo-container img');
             const spacesLogo = document.querySelector('#spaces-logo-container img');
+            const successMessage = document.getElementById('successMessage');
+            const backgroundVideo = document.getElementById('background-video');
 
-            // 画像をすべて非表示にし、初期画面を再表示
-            images.forEach(imageId => {
-                document.getElementById(imageId).style.display = 'none';
-            });
+            // 背景動画を非表示し、動画をリセット
+            if (backgroundVideo) {
+                backgroundVideo.style.display = 'none';
+                backgroundVideo.pause();
+                backgroundVideo.currentTime = 0;
+            }
 
-            document.body.style.backgroundImage = 'url(https://ryosuke0525.github.io/ryosuke.github.io/01@2x.jpg)'; // 初期背景を戻す
-
+            // flyTextのリセット
             flyText.textContent = '';
-            flyText.style.display = 'block';
-            flyText.style.animation = ''; // アニメーションをリセット
-            formContainer.style.display = 'flex'; // フォームを中央に再配置
-            formContainer.style.flexDirection = 'column';
-            formContainer.style.justifyContent = 'center';
-            formContainer.style.alignItems = 'center';
-            mainTitle.style.display = 'block';
-            retryBtn.style.display = 'none'; // やり直しボタンを非表示にする
+            flyText.style.display = 'none';
+            flyText.style.animation = 'none'; // アニメーションをリセット
+
+            // メッセージとリトライボタンを非表示
+            successMessage.style.display = 'none';
+            retryBtn.style.display = 'none';
 
             // ロゴを再表示
-            necLogo.style.display = 'block';
-            spacesLogo.style.display = 'block';
-            
+            if (necLogo) {
+                necLogo.style.display = 'block';
+            }
+            if (spacesLogo) {
+                spacesLogo.style.display = 'block';
+            }
+
+            // フォームとタイトルを再表示
+            formContainer.style.display = 'flex';
+            mainTitle.style.display = 'block';
+
             // テキストボックスの内容をクリア
             textarea.value = '';
         }
