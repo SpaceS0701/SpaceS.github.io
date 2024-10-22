@@ -17,7 +17,7 @@
             justify-content: center;
             align-items: center;
             position: relative;
-            background-image: url('https://spaces0701.github.io/SpaceS.github.io/launch.jpg'); /* 一枚の背景画像 */
+            background-image: url('https://spaces0701.github.io/SpaceS.github.io/launch.jpg'); /* 正しいURLを使用 */
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -33,6 +33,7 @@
             object-fit: cover;
             z-index: -2;
             display: none; /* 初期は非表示 */
+            preload: auto; /* 動画のプリロードを有効化 */
         }
 
         h1 {
@@ -46,22 +47,17 @@
             max-width: 90%;
         }
 
-        /* ロゴの配置スタイル */
-        #nec-logo-container, #spaces-logo-container {
+        /* ロゴコンテナの配置スタイルを右揃えに変更 */
+        #logos-container {
             position: fixed;
             bottom: 20px;
+            right: 20px;
             z-index: 50; /* 他の要素より前面に表示 */
+            display: flex;
+            gap: 20px; /* ロゴ間のスペースを調整 */
         }
 
-        #nec-logo-container {
-            left: 20px; /* 左下に配置 */
-        }
-
-        #spaces-logo-container {
-            left: 120px; /* 左下に配置 */
-        }
-
-        #nec-logo-container img, #spaces-logo-container img {
+        #logos-container img {
             width: 80px; /* モバイル向けに縮小 */
             height: auto;
             max-height: 80px; /* 縦方向のサイズを固定 */
@@ -69,8 +65,10 @@
         }
 
         #form-container {
-            margin-top: 20px;
-            position: relative;
+            position: absolute; /* 中央に配置するためにabsoluteに変更 */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             z-index: 20;
             display: flex;
             flex-direction: column;
@@ -175,7 +173,7 @@
         /* メディアクエリの調整 */
         @media screen and (min-width: 601px) {
             /* デスクトップ向けスタイル */
-            #nec-logo-container img, #spaces-logo-container img {
+            #logos-container img {
                 width: 150px;
                 max-height: 150px; /* 縦方向のサイズを固定 */
             }
@@ -204,10 +202,6 @@
 
         @media screen and (max-width: 600px) {
             /* スマートフォン向けスタイル */
-            #spaces-logo-container {
-                left: 100px; /* ロゴ間のスペースを調整 */
-            }
-
             h1 {
                 font-size: 6vw;
             }
@@ -272,8 +266,8 @@
 <body>
 
     <!-- 背景動画（初期は非表示） -->
-    <video id="background-video" muted playsinline>
-        <source src="https://spaces0701.github.io/SpaceS.github.io/space.mp4" type="video/mp4">
+    <video id="background-video" muted playsinline preload="auto">
+        <source src="https://spaces0701.github.io/SpaceS.github.io/space.mp4" type="video/mp4"> <!-- 正しいURLを使用 -->
         <!-- 必要に応じて他のフォーマットを追加 -->
         お使いのブラウザは動画タグに対応していません。
     </video>
@@ -291,18 +285,19 @@
 
     <div class="message" id="successMessage">あなたの想いは宇宙へ飛び立ちました！</div>
 
-    <!-- NECのロゴを左下に配置 -->
-    <div id="nec-logo-container">
-        <a href="https://jpn.nec.com/index.html" target="_blank">
-            <img src="https://spaces0701.github.io/SpaceS.github.io/NEC%20BluStellar.png" alt="NEC logo">
-        </a>
-    </div>
+    <!-- ロゴを右下に配置 -->
+    <div id="logos-container">
+        <div id="nec-logo-container">
+            <a href="https://jpn.nec.com/index.html" target="_blank">
+                <img src="https://spaces0701.github.io/SpaceS.github.io/NEC%20BluStellar.png" alt="NEC logo"> <!-- 正しいURLを使用 -->
+            </a>
+        </div>
 
-    <!-- Space Sのロゴを左下に配置 -->
-    <div id="spaces-logo-container">
-        <a href="https://sites.google.com/view/space-s-jp/?authuser=0" target="_blank">
-            <img src="https://spaces0701.github.io/SpaceS.github.io/Space%20S文字%20切り抜き.png" alt="Space S logo">
-        </a>
+        <div id="spaces-logo-container">
+            <a href="https://sites.google.com/view/space-s-jp/?authuser=0" target="_blank">
+                <img src="https://spaces0701.github.io/SpaceS.github.io/Space%20S文字%20切り抜き.png" alt="Space S logo"> <!-- 正しいURLを使用 -->
+            </a>
+        </div>
     </div>
 
     <button id="retry-btn" onclick="retry()">もっと吐き出す。</button>
@@ -314,14 +309,14 @@
             const formContainer = document.getElementById('form-container');
             const retryBtn = document.getElementById('retry-btn');
             const mainTitle = document.getElementById('main-title');
-            const necLogo = document.querySelector('#nec-logo-container img');
-            const spacesLogo = document.querySelector('#spaces-logo-container img');
+            const logosContainer = document.getElementById('logos-container');
             const backgroundVideo = document.getElementById('background-video');
             const successMessage = document.getElementById('successMessage');
 
             // テキストエリアの内容を取得
             const thoughtText = textarea.value.trim();
-            // エラーメッセージを削除（入力がない場合の処理を無効化）
+
+            // 入力がない場合の処理をコメントアウト
             /*
             if (thoughtText === "") {
                 alert("想いを入力してください。");
@@ -330,11 +325,8 @@
             */
 
             // ロゴを消す
-            if (necLogo) {
-                necLogo.style.display = 'none';
-            }
-            if (spacesLogo) {
-                spacesLogo.style.display = 'none';
+            if (logosContainer) {
+                logosContainer.style.display = 'none';
             }
 
             // フォームとタイトルを非表示
@@ -355,10 +347,14 @@
             if (backgroundVideo) {
                 backgroundVideo.style.display = 'block';
                 backgroundVideo.loop = false; // ループ再生を無効化
-                if (!isMobile) {
-                    backgroundVideo.play();
-                }
+                backgroundVideo.play().catch(error => {
+                    console.error("動画の再生に失敗しました:", error);
+                });
                 // モバイルでは自動再生を避ける
+                if (isMobile) {
+                    // モバイルではユーザーのアクションが必要な場合が多いため、再生がブロックされる可能性があります。
+                    // その場合、ユーザーに再生ボタンを提示するなどの対応が必要です。
+                }
             }
 
             // 背景動画の再生が終了したときの処理
@@ -399,8 +395,7 @@
             const retryBtn = document.getElementById('retry-btn');
             const mainTitle = document.getElementById('main-title');
             const textarea = document.getElementById('thoughts');
-            const necLogo = document.querySelector('#nec-logo-container img');
-            const spacesLogo = document.querySelector('#spaces-logo-container img');
+            const logosContainer = document.getElementById('logos-container');
             const successMessage = document.getElementById('successMessage');
             const backgroundVideo = document.getElementById('background-video');
 
@@ -421,11 +416,8 @@
             retryBtn.style.display = 'none';
 
             // ロゴを再表示
-            if (necLogo) {
-                necLogo.style.display = 'block';
-            }
-            if (spacesLogo) {
-                spacesLogo.style.display = 'block';
+            if (logosContainer) {
+                logosContainer.style.display = 'flex';
             }
 
             // フォームとタイトルを再表示
