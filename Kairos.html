@@ -292,6 +292,11 @@
             <textarea id="thoughts" placeholder="誰にも言えないような、そんなあなたの想いをここに書いてください。"></textarea><br>
             <button onclick="sendThought()">想いを飛ばす</button>
         </div>
+        <div id="form-link-container">
+            <a href="https://spaces0701.github.io/SpaceS.github.io/Form.html" target="_blank">
+                <img src="https://spaces0701.github.io/SpaceS.github.io/想いプレート.png" alt="Plate logo">
+            </a>
+        </div>
     </div>
 
     <div id="fly-text"></div>
@@ -311,11 +316,7 @@
                 <img src="https://spaces0701.github.io/SpaceS.github.io/Space%20S文字%20切り抜き.png" alt="Space S logo"> <!-- 正しいURLを使用 -->
             </a>
         </div>
-        <div id="formlink-container">
-            <a href="https://spaces0701.github.io/SpaceS.github.io/Form.html" target="_blank">
-                <img src="https://spaces0701.github.io/SpaceS.github.io/想いプレート.png" alt="Plate logo">
-            </a>
-        </div>
+
     </div>
 
     <button id="retry-btn" onclick="retry()">もっと吐き出す。</button>
@@ -327,6 +328,7 @@
             const formContainer = document.getElementById('form-container');
             const retryBtn = document.getElementById('retry-btn');
             const mainTitle = document.getElementById('main-title');
+            const formlinkContainer = document.getElementById('form-link-container');
             const logosContainer = document.getElementById('logos-container');
             const backgroundVideo = document.getElementById('background-video');
             const successMessage = document.getElementById('successMessage');
@@ -342,6 +344,7 @@
             // フォームとタイトルを非表示
             formContainer.style.display = 'none';
             mainTitle.style.display = 'none';
+            formlinkContainer.style.display = 'none';
 
             // テキストエリアの内容を中央に表示
             flyText.textContent = thoughtText;
