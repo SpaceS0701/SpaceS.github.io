@@ -285,7 +285,7 @@
             <textarea id="thoughts" placeholder="誰にも言えないような、そんなあなたの想いをここに書いてください。"></textarea><br>
             <button onclick="sendThought()">想いを飛ばす</button>
         </div>
-        <div id="form-link-container">
+        <div id="formlink-container">
             <a href="https://spaces0701.github.io/SpaceS.github.io/Form.html">このフォームが生まれた背景
             </a>
         </div>
@@ -326,14 +326,6 @@
             // テキストエリアの内容を取得
             const thoughtText = textarea.value.trim();
 
-            // 入力がない場合の処理をコメントアウト
-            /*
-            if (thoughtText === "") {
-                alert("想いを入力してください。");
-                return;
-            }
-            */
-
             // ロゴを消す
             if (logosContainer) {
                 logosContainer.style.display = 'none';
@@ -341,6 +333,7 @@
 
             // フォームとタイトルを非表示
             formContainer.style.display = 'none';
+            formlinkContainer.style.display = 'none';
             mainTitle.style.display = 'none';
 
             // テキストエリアの内容を中央に表示
