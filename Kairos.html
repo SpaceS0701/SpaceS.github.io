@@ -37,6 +37,7 @@
 
         /* コンテナ内の要素を縦に並べる */
         #container {
+            font-family: Serif;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -45,6 +46,7 @@
         }
 
         h1 {
+            font-family: Serif;
             background-color: rgba(0, 0, 0, 0.5);
             padding: 10px 20px;
             border-radius: 10px;
@@ -56,6 +58,7 @@
 
         /* ロゴコンテナの配置スタイルを右揃えに変更 */
         #logos-container {
+            font-family: Serif;
             position: fixed;
             bottom: 20px;
             right: 20px;
@@ -72,6 +75,7 @@
         }
 
         #form-container {
+            font-family: Serif;
             z-index: 20;
             display: flex;
             flex-direction: column;
@@ -282,7 +286,7 @@
         <h1 id="main-title">あなたの想いを宇宙へ飛ばそう！</h1>
         <!-- フォーム -->
         <div id="form-container">
-            <textarea id="thoughts" placeholder="誰にも言えないような、そんなあなたの想いをここに書いてください。">font-family: Serif;</textarea><br>
+            <textarea id="thoughts" placeholder="誰にも言えないような、そんなあなたの想いをここに書いてください。"></textarea><br>
             <button onclick="sendThought()">想いを飛ばす</button>
         </div>
     </div>
