@@ -408,6 +408,7 @@
             const mainTitle = document.getElementById('main-title');
             const textarea = document.getElementById('thoughts');
             const logosContainer = document.getElementById('logos-container');
+            const formlinkContainer = document.getElementById('form-link-container');
             const successMessage = document.getElementById('successMessage');
             const backgroundVideo = document.getElementById('background-video');
 
@@ -431,13 +432,11 @@
             if (logosContainer) {
                 logosContainer.style.display = 'flex';
             }
-            if(formlinkContainer){
-                formlinkContainer.style.display = 'flex';
-            }
 
             // フォームとタイトルを再表示
             formContainer.style.display = 'flex';
             mainTitle.style.display = 'block';
+            formlinkContainer.style.display = 'flex';
 
             // テキストボックスの内容をクリア
             textarea.value = '';
