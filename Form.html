@@ -12,13 +12,26 @@
         body {
             font-family: Serif;
             color: #fff;
+            margin: 0;
+            padding: 1rem;
+            background: none; /* 背景は疑似要素で管理するためnone */
+            position: relative;
+            z-index: 0;
+        }
+
+        /* 背景はbody::beforeで固定表示 */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* 背景がテキストの後ろに来るようにする */
             background-image: url('https://spaces0701.github.io/SpaceS.github.io/space.png');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            background-attachment: fixed; /* 背景を固定 */
-            margin: 0;
-            padding: 1rem;
         }
 
         h1 {
