@@ -3,40 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>想いフォームへの想い</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            color: #333;
-            line-height: 1.6;
-        }
-        h1 {
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
-        p {
-            margin-bottom: 20px;
-        }
-    </style>
+    <title>カイロスプログラムについて</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- カスタムCSS -->
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <h1>「想いフォーム」に込められた想い</h1>
-    <p>
-        ここでは、先日制作した「想いを宇宙へ」と名づけたフォームページに込めた意図やメッセージについて解説します。
-    </p>
-    <p>
-        このフォームは、ユーザーが言葉にできない想い、心に秘めた気持ちを解放し、宇宙へ放出するイメージで設計しました。背景動画やアニメーションを活用することで、単なるテキスト送信ではなく、感情を解き放つ「儀式」のような体験を演出しています。
-    </p>
-    <p>
-        ユーザーがメッセージを入力し、ボタンを押すと、ロケットが打ち上がるような演出や、空間が広がるような動きを通じて、日常では表現できない想いを「宇宙」へと飛ばしている気持ちになってもらうことが狙いです。
-    </p>
-    <p>
-        この背景には「心の浄化」や「リセット」といった意味合いもあり、「自分だけが知っている秘密」や「悩み」を、一度ここで形にし、そこから遠ざけることで、新しい視点を得る手助けになればと考えています。
-    </p>
-    <p>
-        結果的に、このフォームが「単なるテキスト投稿」ではなく、「心の内側を解放する場」として機能し、ユーザーの日常をより軽やかにするきっかけになれば幸いです。
-    </p>
-    <a href="index.html">メインページへ戻る</a>
+    <!-- ナビゲーションバー -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">カイロスプログラム</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="#overview">概要</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#background">背景</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#trajectory">軌跡</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#results">結果</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#wishes">願い</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ヒーローセクション -->
+    <header class="bg-primary text-white text-center py-5">
+        <div class="container">
+            <h1 class="display-4">カイロスプログラムについて</h1>
+            <p class="lead">日本の教育を変えるために、中高生が挑む宇宙プロジェクト</p>
+        </div>
+    </header>
+
+    <!-- 概要セクション -->
+    <section id="overview" class="py-5">
+        <div class="container">
+            <h2 class="mb-4">概要</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <img src="images/overview.jpg" alt="概要イメージ" class="img-fluid rounded">
+                </div>
+                <div class="col-md-6">
+                    <p>カイロスプログラムとは、中高生主導でスペースバルーンを打ち上げ、宇宙の映像を撮影することで社会課題の解決に挑戦するプログラムです。このプログラムでは、与えられた課題に依存せず、自ら考え行動する姿勢を育てます。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 背景セクション -->
+    <section id="background" class="bg-light py-5">
+        <div class="container">
+            <h2 class="mb-4">背景</h2>
+            <div class="row">
+                <div class="col-md-6 order-md-2">
+                    <img src="images/background.jpg" alt="背景イメージ" class="img-fluid rounded">
+                </div>
+                <div class="col-md-6 order-md-1">
+                    <p>AIの進化に伴い、詰め込み教育では対応しきれない時代が到来しています。カイロスプログラムは、自分で課題を見つけ出し、独自の解法で解決する力を育成するために立ち上げられました。宇宙という壮大なテーマを通じて、そのメッセージを効果的に伝えます。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 軌跡セクション -->
+    <section id="trajectory" class="py-5">
+        <div class="container">
+            <h2 class="mb-4">軌跡</h2>
+            <img src="images/trajectory.jpg" alt="軌跡イメージ" class="img-fluid rounded mb-4">
+            <ul class="timeline">
+                <li><strong>1月:</strong> 発案、1on1、草案作成</li>
+                <li><strong>2月:</strong> 仲間集め、情報収集、計画、企画書作成</li>
+                <li><strong>3月:</strong> NECと知り合う、プログラム始動、第1フェーズ開始</li>
+                <li><strong>...（続く）</strong></li>
+                <li><strong>12月:</strong> プレスリリースの送付</li>
+                <li><strong>これから:</strong> メディア露出、学校でのプレゼン、行政とのキャンペーン</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 結果セクション -->
+    <section id="results" class="bg-light py-5">
+        <div class="container">
+            <h2 class="mb-4">結果</h2>
+            <img src="images/results.jpg" alt="結果イメージ" class="img-fluid rounded mb-4">
+            <h3>解決する社会課題</h3>
+            <p><strong>1. 「宇宙から見える地球×おにぎり」</strong> 世界の子供の貧困解決に向けた一歩として、宇宙で撮影したおにぎりの映像をSNSに投稿し、「#Onigiri Action」を通じて給食を支援します。</p>
+            <p><strong>2. 「心に秘めた悩みや願いを宇宙空間に飛ばす」</strong> 学生とNEC社員が集めた悩みや願いを宇宙に飛ばし、視野を広げるきっかけを提供します。</p>
+            <h3>技術的成果</h3>
+            <ul>
+                <li>カメラ4基搭載のペイロード作成</li>
+                <li>自作のパラシュートを含む3段構造のバルーン準備</li>
+                <li>2024年10月18日に静岡県での打ち上げ成功</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 願いセクション -->
+    <section id="wishes" class="py-5">
+        <div class="container">
+            <h2 class="mb-4">願い</h2>
+            <img src="images/wishes.jpg" alt="願いイメージ" class="img-fluid rounded mb-4">
+            <p>撮影した映像を活用して社会課題を解決し、今後も「#Onigiri Action」を継続していきます。想いフォームを通じて、さまざまな人々が自身の気持ちを吐き出し、前向きに生きるきっかけを提供します。さらに、宇宙で活動する中高生の姿を通じて、自主的な課題解決能力の重要性を社会に訴えかけます。</p>
+        </div>
+    </section>
+
+    <!-- フッター -->
+    <footer class="bg-dark text-white text-center py-3">
+        <div class="container">
+            <p>&copy; 2024 カイロスプログラム</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JSと依存関係 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
